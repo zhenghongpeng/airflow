@@ -66,9 +66,9 @@ dag = DAG(
 
 t2 = BashOperator(
     task_id='one_sec_log',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/gen_time_log.py   \
-                     -i  /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/input     \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/bha_master.csv \
+    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/oneseclog/oneseclog/   \
+                     -i  /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/testinput     \
+                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/oneseclog/data/bha_master.csv \
                      -o /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/testresult/",
     dag=dag,
 )

@@ -66,29 +66,37 @@ dag = DAG(
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = BashOperator(
     task_id='one_sec_log_para',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/gen_time_log_mp.py   \
+    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/oneseclog/bin/oneseclog   \
                      -i  /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/input     \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/bha_master.csv \
+                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/oneseclog/data/bha_master.csv \
                      -o /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/result/",
     dag=dag,
 )
 
 t2 = BashOperator(
-    task_id='one_sec_log',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/gen_time_log.py   \
-                     -i  /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/testinput     \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/bha_master.csv \
-                     -o /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/testresult/",
+    task_id='depth_log',
+    bash_command="cd /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/depthlog/ && \
+                    ./bin/depthlog   \
+                     -i /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/result/results/time_log/ \
+                     -o  /media/kevinpeng/cdrive/Users/kevin.peng/code/Depthshift_Depthjump_corrected/newdata/parquet \
+                     -b /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/depthlog/data/",
+    dag=dag,
+)
+
+t3 = BashOperator(
+    task_id='analytics_ml',
+    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/DataConditioning/TIMELOG_RIG-ACTIVITY_KPI/analyticsml/bin/analyticsml   \
+                     -i /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/parquet/parquet \
+                     -o /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/result/",
     dag=dag,
 )
 def print_hello():
     return 'Hello world!'
 
-dummy_operator = DummyOperator(task_id='dummy_task', retries=1, dag=dag)
+# dummy_operator = DummyOperator(task_id='dummy_task', retries=1, dag=dag)
 
-hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
+# hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
 
-dummy_operator >> hello_operator >>[t1,t2]
+# dummy_operator >> hello_operator >> t1 >> t2
 
-
-# t1 >> [t2, t3]
+t1 >> t2 >> t3
