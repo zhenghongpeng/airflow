@@ -56,9 +56,9 @@ default_args = {
 }
 
 dag = DAG(
-    'huntoil',
+    'huntoil_aws',
     default_args=default_args,
-    description='Datavedik Data Pipeline',
+    description='Datavedik Data Pipeline AWS',
     schedule_interval='@yearly',
     start_date=datetime(2017, 3, 20), catchup=False,
 )
@@ -66,28 +66,28 @@ dag = DAG(
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = BashOperator(
     task_id='one_sec_log_para',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/oneseclog/bin/oneseclog   \
-                     -i  /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/input     \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/oneseclog/data/bha_master.csv \
-                     -o /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/result/",
+    bash_command="$HOME/HuntOil/Packaging/oneseclog/bin/oneseclog   \
+                     -i $HOME/input     \
+                     -b $HOME/HuntOil/Packaging/oneseclog/data/bha_master.csv \
+                     -o $HOME/input/depthlog/",
     dag=dag,
 )
 
 t2 = BashOperator(
     task_id='depth_log',
-    bash_command="cd /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/depthlog/ && \
+    bash_command="cd $HOME/HuntOil/Packaging/depthlog/ && \
                     ./bin/depthlog   \
-                     -i /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/result/results/time_log/ \
-                     -o  /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/parquet \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/depthlog/data/",
+                     -i $HOME/input/depthlog/results/time_log/ \
+                     -o  $HOME/input/depthlog/results/time_log/parquet \
+                     -b $HOME/HuntOil/Packaging/depthlog/data/",
     dag=dag,
 )
 
 t3 = BashOperator(
     task_id='analytics_ml',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/data_loading/bin/data_loading   \
-                     -i /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/parquet/parquet \
-                     -o /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/result/",
+    bash_command="$HOME/HuntOil/Packaging/data_loading/bin/data_loading   \
+                     -i $HOME/input/depthlog/results/time_log/parquet/parquet \
+                     -o $HOME/input/depthlog/results/time_log/parquet/result/",
     dag=dag,
 )
 def print_hello():

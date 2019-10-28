@@ -56,7 +56,7 @@ default_args = {
 }
 
 dag = DAG(
-    'huntoil',
+    'huntoil_xml',
     default_args=default_args,
     description='Datavedik Data Pipeline',
     schedule_interval='@yearly',
@@ -64,39 +64,49 @@ dag = DAG(
 )
 
 # t1, t2 and t3 are examples of tasks created by instantiating operators
+
 t1 = BashOperator(
-    task_id='one_sec_log_para',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/oneseclog/bin/oneseclog   \
-                     -i  /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/input     \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/oneseclog/data/bha_master.csv \
-                     -o /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/result/",
+    task_id='csv_loader',
+    bash_command="  export SQLCONFIGFILE=/home/kevinpeng/.config/config.ini  && \
+                    cd /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/  && \
+                    ./bin/witsml_loader \
+                    -c UBUNTU  \
+                    -s '/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader/sample_data/csv_huntoil.csv' \
+                    -d csv \
+                   ",
+
     dag=dag,
 )
 
 t2 = BashOperator(
-    task_id='depth_log',
-    bash_command="cd /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/depthlog/ && \
-                    ./bin/depthlog   \
-                     -i /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/result/results/time_log/ \
-                     -o  /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/Depthshift_Depthjump_corrected/newdata/parquet \
-                     -b /media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/depthlog/data/",
-    dag=dag,
-)
+    task_id='xml_loader',
+    bash_command="  export SQLCONFIGFILE=/home/kevinpeng/.config/config.ini  && \
+                    cd /media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader && \
+                    ./witsml_loader.py \
+                    -c UBUNTU  \
+                    -d xml -t well\
+                    -f '/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader/sample_data/' \
+                    -m '/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader/mapping/WITSML_PPDM_Mappings.xlsx' \
+                   ",
 
-t3 = BashOperator(
-    task_id='analytics_ml',
-    bash_command="/media/kevinpeng/cdrive/Users/kevin.peng/new_witsml_loader/HuntOil/Packaging/data_loading/bin/data_loading   \
-                     -i /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/parquet/parquet \
-                     -o /home/kevinpeng/workdir/Depthshift_Depthjump_corrected/newdata/result/",
     dag=dag,
 )
-def print_hello():
-    return 'Hello world!'
+# t1 = BashOperator(
+#     task_id='csv_loader',
+#     bash_command="cd :/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader && \
+#                     ./witsml_loader.py \
+#                     -c UBUNTU  \
+#                     -s '/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader/sample_data/csv_huntoil.csv' \
+#                     -d csv \
+#                     -f '/media/kevinpeng/cdrive/Users/kevin.peng/code/HuntOil/Packaging/New_WITSML_Loader/new_witsml_loader/sample_data/' \
+#                    ",
+#
+#     dag=dag,
+# )
+# def print_hello():
+#     return 'Hello world!'
 
 # dummy_operator = DummyOperator(task_id='dummy_task', retries=1, dag=dag)
 
 # hello_operator = PythonOperator(task_id='hello_task', python_callable=print_hello, dag=dag)
-
-# dummy_operator >> hello_operator >> t1 >> t2
-
-t1 >> t2 >> t3
+t1 >> t2
