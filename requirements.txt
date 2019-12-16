@@ -145,7 +145,7 @@ tabulate==0.8.5
 tb-nightly==1.14.0a20190603
 tenacity==4.12.0
 tensorboard==1.14.0
-tensorflow==1.14.0
+tensorflow==1.15.0
 tensorflow-estimator==1.14.0
 #tensorflow-gpu==1.14.0
 termcolor==1.1.0
@@ -326,7 +326,7 @@ tabulate==0.8.5
 tb-nightly==1.14.0a20190603
 tenacity==4.12.0
 tensorboard==1.14.0
-tensorflow==1.14.0
+tensorflow==1.15.0
 tensorflow-estimator==1.14.0
 #tensorflow-gpu==1.14.0
 termcolor==1.1.0
