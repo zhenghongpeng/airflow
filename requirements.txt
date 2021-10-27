@@ -17,7 +17,7 @@ colorama==0.4.1
 colorlog==4.0.2
 croniter==0.3.30
 cycler==0.10.0
-dask==2.5.0
+dask==2021.10.0
 databricks-cli==0.9.0
 decorator==4.4.0
 defusedxml==0.6.0
@@ -196,7 +196,7 @@ colorlog==4.0.2
 configparser<3.6.0,>=3.5.0 
 croniter==0.3.30
 cycler==0.10.0
-dask==2.5.0
+dask==2021.10.0
 databricks-cli==0.9.0
 decorator==4.4.0
 defusedxml==0.6.0
