@@ -102,7 +102,7 @@ pbr==5.4.3
 pendulum==1.4.4
 pexpect==4.7.0
 pickleshare==0.7.5
-Pillow==6.1.0
+Pillow==9.0.1
 prison==0.1.0
 prometheus-client==0.7.1
 prometheus-flask-exporter==0.9.1
@@ -282,7 +282,7 @@ pbr==5.4.3
 pendulum==1.4.4
 pexpect==4.7.0
 pickleshare==0.7.5
-Pillow==6.1.0
+Pillow==9.0.1
 prison==0.1.0
 prometheus-client==0.7.1
 prometheus-flask-exporter==0.9.1
