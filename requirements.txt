@@ -78,7 +78,7 @@ kubernetes==10.0.1
 lazy-object-proxy==1.4.2
 locket==0.2.0
 lockfile==0.12.2
-lxml==4.4.1
+lxml==4.9.1
 Mako==1.1.0
 MarkupSafe==1.1.1
 marshmallow==2.19.5
@@ -257,7 +257,7 @@ kubernetes==10.0.1
 lazy-object-proxy==1.4.2
 locket==0.2.0
 lockfile==0.12.2
-lxml==4.4.1
+lxml==4.9.1
 Mako==1.1.0
 markdown<3.0,>=2.5.2 
 MarkupSafe==1.1.1
