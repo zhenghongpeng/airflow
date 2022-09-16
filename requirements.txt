@@ -79,7 +79,7 @@ lazy-object-proxy==1.4.2
 locket==0.2.0
 lockfile==0.12.2
 lxml==4.4.1
-Mako==1.1.0
+Mako==1.2.2
 MarkupSafe==1.1.1
 marshmallow==2.19.5
 marshmallow-enum==1.5.1
@@ -258,7 +258,7 @@ lazy-object-proxy==1.4.2
 locket==0.2.0
 lockfile==0.12.2
 lxml==4.4.1
-Mako==1.1.0
+Mako==1.2.2
 markdown<3.0,>=2.5.2 
 MarkupSafe==1.1.1
 marshmallow==2.19.5
