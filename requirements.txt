@@ -107,7 +107,7 @@ prison==0.1.0
 prometheus-client==0.7.1
 prometheus-flask-exporter==0.9.1
 prompt-toolkit==2.0.10
-protobuf==3.10.0
+protobuf==3.18.3
 psutil==5.6.3
 ptyprocess==0.6.0
 pyarrow==0.14.1
@@ -287,7 +287,7 @@ prison==0.1.0
 prometheus-client==0.7.1
 prometheus-flask-exporter==0.9.1
 prompt-toolkit==2.0.10
-protobuf==3.10.0
+protobuf==3.18.3
 psutil==5.6.3
 ptyprocess==0.6.0
 pyarrow==0.14.1
